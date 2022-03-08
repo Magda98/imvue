@@ -40,7 +40,7 @@ body {
   }
 
   @mixin btn($background-color, $border-color) {
-    color: $text;
+    color: $text-dark;
     background-color: $background-color;
     border: 2px solid $border-color;
     padding: 10px 20px;
@@ -51,16 +51,24 @@ body {
 
     &:hover {
       background-color: transparent;
-      color: $text;
+      color: $primary-light;
     }
   }
 
   .btn-primary,
   .btn {
-    @include btn($primary, $primary);
+    @include btn($primary-light, $primary-light);
   }
 
   .btn-secondary {
     @include btn($secondary, $secondary);
+  }
+
+  .btn-primary-outline {
+    @include btn(transparent, $primary-light);
+
+    &:hover {
+      background-color: rgba($primary-light, 0.2);
+    }
   }
 }

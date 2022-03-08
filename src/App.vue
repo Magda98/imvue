@@ -1,8 +1,23 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import { useUserStore } from "./stores/user";
+import { onMounted, ref } from "vue";
+import { useImagesStore } from "./stores/images";
 
 const user = useUserStore();
+const images = useImagesStore();
+
+onMounted(async () => {
+  const url = window.location.hash.substring(1);
+  const hasAccesToken = new URLSearchParams(url).has("access_token");
+
+  if (hasAccesToken) {
+    user.getAccessToken();
+  } else if (user.token?.length) {
+    await user.setAccessToken();
+    images.getUserImages();
+  }
+});
 </script>
 
 <template>
@@ -25,14 +40,14 @@ const user = useUserStore();
             {{ user.userInfo.url }}
           </a>
         </div>
-        <button class="btn">Wyloguj</button>
+        <button @click="user.logout" class="btn">Wyloguj</button>
       </div>
       <div v-else>
         <button class="btn" @click="user.getAccessTokenUrl">Zaloguj</button>
       </div>
     </div>
   </header>
-  <main class="container"><RouterView /></main>
+  <main class="container" v-if="user.userInfo"><RouterView /></main>
 </template>
 
 <style lang="scss">

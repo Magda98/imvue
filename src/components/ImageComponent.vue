@@ -1,30 +1,62 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
+import HeartIcon from "./icons/HeartIcon.vue";
+import HeartIconOutline from "./icons/HeartIconOutline.vue";
+import { useImagesStore } from "../stores/images";
 
-const props = defineProps<{
+const images = useImagesStore();
+
+function handleClick(event: MouseEvent) {
+  event.stopPropagation();
+  images.togleFavouriteImage(props.item.id);
+}
+
+interface Props {
   item: {
     link: string;
     views: number;
     id: string;
+    favorite: boolean;
   };
-}>();
+}
+
+const props = defineProps<Props>();
 </script>
 
 <template>
-  <div class="image">
+  <div class="image-card">
     <img :src="props.item.link" referrerpolicy="no-referrer" />
+    <div class="actions">
+      <button v-if="props.item.favorite" class="btn-primary-outline">
+        <HeartIcon></HeartIcon>
+      </button>
+      <button v-else @click="handleClick" class="btn-primary-outline">
+        <HeartIconOutline></HeartIconOutline>
+      </button>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 @import "@/assets/style/base.scss";
-.image {
+.image-card {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   background-color: $bg-elevation;
   border-radius: 5px;
   padding: 20px;
+
+  .actions {
+    display: flex;
+    margin-top: 10px;
+
+    svg {
+      width: 25px;
+      fill: $primary-light;
+    }
+  }
 
   img {
     width: 300px;

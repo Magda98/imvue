@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { useUserStore } from "../stores/user";
+import { ref } from "vue";
 import { useImagesStore } from "../stores/images";
 import VueEasyLightbox from "vue-easy-lightbox";
 import ImageComponent from "@/components/ImageComponent.vue";
 
-const user = useUserStore();
 const images = useImagesStore();
 const currentIndex = ref(0);
 const visible = ref(false);
@@ -18,16 +16,6 @@ function showImg(index: number) {
 function handleHide() {
   visible.value = false;
 }
-
-onMounted(() => {
-  if (window.location.href.indexOf("access_token")) {
-    user.getAccessToken();
-  }
-
-  if (user.token) {
-    images.getUserImages();
-  }
-});
 </script>
 
 <template>
@@ -35,13 +23,13 @@ onMounted(() => {
     <div class="image-list">
       <div
         v-for="(item, index) in images.userImages"
-        :key="index"
+        :key="item.id"
         @click="() => showImg(index)"
       >
         <ImageComponent :item="item"></ImageComponent>
       </div>
     </div>
-    <div v-if="user.userImages">
+    <div>
       <vue-easy-lightbox
         :visible="visible"
         :imgs="images.getImagesUrlArray"

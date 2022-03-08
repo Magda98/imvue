@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore, type _GettersTree } from "pinia";
 import api from "../api";
 import { apiClient } from "../api";
 
@@ -14,28 +14,15 @@ interface Data {
         url: string;
       }
     | undefined;
-  userImages: Array<{
-    link: string;
-    views: number;
-    id: string;
-  }>;
 }
 
-export const useUserStore = defineStore({
+export const useUserStore = defineStore<string, Data, _GettersTree<Data>>({
   id: "user",
-  state: () =>
-    ({
-      token: "",
-      username: "",
-      userInfo: undefined,
-      userImages: [],
-    } as Data),
-
-  getters: {
-    getImagesUrlArray: (state) => {
-      return state.userImages.map((item) => item.link);
-    },
-  },
+  state: () => ({
+    token: "",
+    username: "",
+    userInfo: undefined,
+  }),
 
   actions: {
     getAccessTokenUrl() {
@@ -58,7 +45,7 @@ export const useUserStore = defineStore({
       this.getUserData();
     },
 
-    setAccessToken() {
+    async setAccessToken() {
       apiClient.defaults.headers.common = {
         Authorization: `Bearer ${this.token}`,
       };
@@ -67,11 +54,19 @@ export const useUserStore = defineStore({
     async getUserData() {
       const response = await api.getUserData(this.username);
       this.userInfo = response.data;
+      window.location.hash = "";
+      window.location.reload();
     },
 
     async getUserImages() {
       const response = await api.getUserImages();
       this.userImages = response.data;
     },
+
+    logout() {
+      this.userInfo = undefined;
+      this.token = "";
+    },
   },
+  persist: true,
 });

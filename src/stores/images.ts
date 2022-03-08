@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore, type _GettersTree } from "pinia";
 import api from "../api";
 
 interface Data {
@@ -6,15 +6,15 @@ interface Data {
     link: string;
     views: number;
     id: string;
+    favorite: boolean;
   }>;
 }
 
-export const useImagesStore = defineStore({
+export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
   id: "images",
-  state: () =>
-    ({
-      userImages: [],
-    } as Data),
+  state: () => ({
+    userImages: [],
+  }),
 
   getters: {
     getImagesUrlArray: (state) => {
@@ -25,7 +25,13 @@ export const useImagesStore = defineStore({
   actions: {
     async getUserImages() {
       const response = await api.getUserImages();
+      console.log(response);
       this.userImages = response.data;
+    },
+
+    async togleFavouriteImage(id: string) {
+      const response = await api.togleFavouriteImage(id);
+      console.log(response);
     },
   },
 });
