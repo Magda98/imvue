@@ -7,7 +7,11 @@ export const apiClient = axios.create({
 const api = {
   async getUserData(username: string | null) {
     const response = await apiClient.get(`/3/account/${username}`);
+    return response.data;
+  },
 
+  async getUserImages() {
+    const response = await apiClient.get(`3/account/me/images`);
     return response.data;
   },
 };

@@ -11,7 +11,9 @@
   "dependencies": {
     "axios": "^0.26.0",
     "pinia": "^2.0.11",
+    "sass": "^1.49.9",
     "vue": "^3.2.31",
+    "vue-easy-lightbox": "^1.4.1",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {

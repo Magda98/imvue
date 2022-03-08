@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+
+$primary: #6f1bd6;
+$primary-light: #bb86fc;
+$secondary: rgb(248, 116, 8);
+$text: #fff;
+$text-dark: rgb(25, 24, 29);
+$bg: #141414;
+$bg-elevation: #363636;
+$bg-header: rgb(25, 24, 29);
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: $text;
+  background: $bg;
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  a {
+    text-decoration: none;
+    color: $text;
+  }
+
+  img {
+    filter: brightness(0.8) contrast(1.2);
+  }
+
+  @mixin btn($background-color, $border-color) {
+    color: $text;
+    background-color: $background-color;
+    border: 2px solid $border-color;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: transparent;
+      color: $text;
+    }
+  }
+
+  .btn-primary,
+  .btn {
+    @include btn($primary, $primary);
+  }
+
+  .btn-secondary {
+    @include btn($secondary, $secondary);
+  }
+}
