@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import TheWelcome from '@/components/TheWelcome.vue'
+import { onMounted } from "vue";
+import { useUserStore } from "../stores/user";
+const user = useUserStore();
+
+onMounted(() => {
+  if (window.location.href.indexOf("access_token")) {
+    user.getAccessToken();
+  }
+});
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <button @click="user.getAccessTokenUrl">Zaloguj</button>
   </main>
 </template>
