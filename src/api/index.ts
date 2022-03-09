@@ -10,8 +10,13 @@ const api = {
     return response.data;
   },
 
-  async getUserImages() {
-    const response = await apiClient.get(`/account/me/images`);
+  async getUserImages(page: number) {
+    const response = await apiClient.get(`/account/me/images/${page}`);
+    return response.data;
+  },
+
+  async getImagesCount() {
+    const response = await apiClient.get(`/account/me/images/count`);
     return response.data;
   },
 

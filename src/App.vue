@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import { useUserStore } from "./stores/user";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { useImagesStore } from "./stores/images";
 
 const user = useUserStore();
@@ -17,6 +17,7 @@ onMounted(async () => {
     await user.setAccessToken();
     images.getUserImages();
     images.getFavourites();
+    images.getImagesCount();
   }
 });
 </script>

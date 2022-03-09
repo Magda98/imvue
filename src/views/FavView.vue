@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { useImagesStore } from "../stores/images";
 import VueEasyLightbox from "vue-easy-lightbox";
 import ImageComponent from "@/components/ImageComponent.vue";
-import PaginationComponent from "@/components/PaginationComponent.vue";
 
 const images = useImagesStore();
 const currentIndex = ref(0);
@@ -23,23 +22,17 @@ function handleHide() {
   <div>
     <div class="image-list">
       <div
-        v-for="(item, index) in images.userImages"
+        v-for="(item, index) in images.userFavImages"
         :key="item.id"
         @click="() => showImg(index)"
       >
         <ImageComponent :item="item"></ImageComponent>
       </div>
     </div>
-    <PaginationComponent
-      :items="images.imagesCount"
-      :pages="images.getPagesCount"
-      :current-page="images.page"
-      :max-pages="images.getMaxPagesCount"
-    ></PaginationComponent>
     <div>
       <vue-easy-lightbox
         :visible="visible"
-        :imgs="images.getImagesUrlArray"
+        :imgs="images.getFavUrlArray"
         :index="currentIndex"
         @hide="handleHide"
       ></vue-easy-lightbox>

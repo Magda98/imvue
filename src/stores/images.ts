@@ -14,6 +14,8 @@ interface Data {
     id: string;
     favorite: boolean;
   }>;
+  imagesCount: number;
+  page: number;
 }
 
 export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
@@ -21,6 +23,8 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
   state: () => ({
     userImages: [],
     userFavImages: [],
+    imagesCount: 0,
+    page: 0,
   }),
 
   getters: {
@@ -28,26 +32,44 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
       return state.userImages.map((item) => item.link);
     },
 
+    getFavUrlArray: (state) => {
+      return state.userFavImages.map((item) => item.link);
+    },
+
     getFavArray: (state) => {
       return state.userFavImages.map((item) => item.id);
+    },
+
+    getPagesCount: (state) => {
+      const n = Math.ceil(state.imagesCount / 50.0);
+      return Array.from({ length: n }, (_, index) => index + 1);
+    },
+
+    getMaxPagesCount: (state) => {
+      const n = Math.ceil(state.imagesCount / 50.0);
+      return n;
     },
   },
 
   actions: {
     async getUserImages() {
-      const response = await api.getUserImages();
+      const response = await api.getUserImages(this.page);
       this.userImages = response.data;
+    },
+
+    async getImagesCount() {
+      const response = await api.getImagesCount();
+      console.log(response);
+      this.imagesCount = response.data;
     },
 
     async togleFavouriteImage(id: string) {
       const response = await api.togleFavouriteImage(id);
       this.getFavourites();
-      console.log(response);
     },
 
     async getFavourites() {
       const response = await api.getFavroites();
-      console.log(response);
       this.userFavImages = response.data;
     },
   },
