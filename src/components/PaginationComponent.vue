@@ -1,33 +1,31 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
-import { useImagesStore } from "../stores/images";
+import { defineProps, ref } from "vue";
 
-const images = useImagesStore();
+const currentPage = ref(0);
 
 function handleClick(index: number) {
-  images.page = index;
-  images.getUserImages();
+  currentPage.value = index;
+  props.callback(currentPage.value);
 }
 
 function prev() {
-  if (images.page > 0) {
-    images.page -= 1;
-    images.getUserImages();
+  if (currentPage.value > 0) {
+    currentPage.value -= 1;
+    props.callback(currentPage.value);
   }
 }
 
 function next() {
-  if (images.page < props.maxPages) {
-    images.page += 1;
-    images.getUserImages();
+  if (currentPage.value < props.maxPages - 1) {
+    currentPage.value += 1;
+    props.callback(currentPage.value);
   }
 }
 
 interface Props {
-  items: number;
   pages: Array<number>;
   maxPages: number;
-  currentPage: number;
+  callback: (p: number) => void;
 }
 
 const props = defineProps<Props>();
@@ -38,7 +36,7 @@ const props = defineProps<Props>();
     <li @click="prev" class="pag prev">&lt;</li>
     <li
       class="pag"
-      :class="{ active: props.currentPage === index }"
+      :class="{ active: currentPage === index }"
       v-for="(num, index) in props.pages"
       :key="index"
       @click="handleClick(index)"
@@ -55,12 +53,27 @@ const props = defineProps<Props>();
 .pagination {
   list-style: none;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0;
+  font-size: 16px;
 
   .pag {
     margin: 0 5px;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $primary-light;
+    }
 
     &.active {
       color: $primary-light;
+    }
+
+    &.next,
+    &.prev {
+      margin: 0 10px;
     }
   }
 }

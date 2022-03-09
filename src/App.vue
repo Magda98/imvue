@@ -16,8 +16,8 @@ onMounted(async () => {
   } else if (user.token?.length) {
     await user.setAccessToken();
     images.getUserImages();
-    images.getFavourites();
     images.getImagesCount();
+    images.getAllFav();
   }
 });
 </script>

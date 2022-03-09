@@ -31,10 +31,9 @@ function handleHide() {
       </div>
     </div>
     <PaginationComponent
-      :items="images.imagesCount"
       :pages="images.getPagesCount"
-      :current-page="images.page"
       :max-pages="images.getMaxPagesCount"
+      :callback="images.getUserImages"
     ></PaginationComponent>
     <div>
       <vue-easy-lightbox
