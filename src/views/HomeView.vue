@@ -21,6 +21,12 @@ function handleHide() {
 
 <template>
   <div>
+    <PaginationComponent
+      :pages="images.getPagesCount"
+      :max-pages="images.getMaxPagesCount"
+      :current-page="images.currentPage"
+      :callback="images.getUserImages"
+    ></PaginationComponent>
     <div class="image-list">
       <div
         v-for="(item, index) in images.userImages"
@@ -33,6 +39,7 @@ function handleHide() {
     <PaginationComponent
       :pages="images.getPagesCount"
       :max-pages="images.getMaxPagesCount"
+      :current-page="images.currentPage"
       :callback="images.getUserImages"
     ></PaginationComponent>
     <div>
@@ -51,5 +58,17 @@ function handleHide() {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
+
+  @media only screen and (max-width: 1700px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

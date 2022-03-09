@@ -1,30 +1,26 @@
 <script setup lang="ts">
 import { defineProps, ref } from "vue";
 
-const currentPage = ref(0);
-
 function handleClick(index: number) {
-  currentPage.value = index;
-  props.callback(currentPage.value);
+  props.callback(index);
 }
 
 function prev() {
-  if (currentPage.value > 0) {
-    currentPage.value -= 1;
-    props.callback(currentPage.value);
+  if (props.currentPage > 0) {
+    props.callback(props.currentPage - 1);
   }
 }
 
 function next() {
-  if (currentPage.value < props.maxPages - 1) {
-    currentPage.value += 1;
-    props.callback(currentPage.value);
+  if (props.currentPage < props.maxPages - 1) {
+    props.callback(props.currentPage + 1);
   }
 }
 
 interface Props {
   pages: Array<number>;
   maxPages: number;
+  currentPage: number;
   callback: (p: number) => void;
 }
 
@@ -36,7 +32,7 @@ const props = defineProps<Props>();
     <li @click="prev" class="pag prev">&lt;</li>
     <li
       class="pag"
-      :class="{ active: currentPage === index }"
+      :class="{ active: props.currentPage === index }"
       v-for="(num, index) in props.pages"
       :key="index"
       @click="handleClick(index)"

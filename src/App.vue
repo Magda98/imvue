@@ -3,9 +3,13 @@ import { RouterLink, RouterView } from "vue-router";
 import { useUserStore } from "./stores/user";
 import { onMounted } from "vue";
 import { useImagesStore } from "./stores/images";
+import ModalComponent from "./components/ModalComponent.vue";
+import { useModalStore } from "./stores/modal";
+import PlusIcon from "./components/icons/PlusIcon.vue";
 
 const user = useUserStore();
 const images = useImagesStore();
+const modal = useModalStore();
 
 onMounted(async () => {
   const url = window.location.hash.substring(1);
@@ -25,7 +29,7 @@ onMounted(async () => {
 <template>
   <header class="header">
     <div class="header-inner">
-      <nav class="nav">
+      <nav v-if="user.userInfo" class="nav">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/fav">Fav</RouterLink>
       </nav>
@@ -50,6 +54,17 @@ onMounted(async () => {
     </div>
   </header>
   <main class="container" v-if="user.userInfo"><RouterView /></main>
+  <main class="container" v-else>
+    <h2 class="text-center">Zaloguj się aby korzystać z aplikacji 😎</h2>
+  </main>
+  <button
+    v-if="user.userInfo"
+    @click="modal.showModal = true"
+    class="btn primary floating"
+  >
+    <PlusIcon />
+  </button>
+  <ModalComponent></ModalComponent>
 </template>
 
 <style lang="scss">
@@ -59,6 +74,27 @@ onMounted(async () => {
   max-width: 80%;
   width: 100%;
   margin: 140px auto 50px auto;
+  @media only screen and (max-width: 1700px) {
+    max-width: 90%;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.btn.floating {
+  position: fixed;
+  z-index: 10;
+  bottom: 50px;
+  right: 50px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav {

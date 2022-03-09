@@ -2,6 +2,7 @@
 import { defineProps } from "vue";
 import HeartIcon from "./icons/HeartIcon.vue";
 import HeartIconOutline from "./icons/HeartIconOutline.vue";
+import TrashIcon from "./icons/TrashIcon.vue";
 import { useImagesStore } from "../stores/images";
 
 const images = useImagesStore();
@@ -9,6 +10,11 @@ const images = useImagesStore();
 function handleClick(event: MouseEvent) {
   event.stopPropagation();
   images.togleFavouriteImage(props.item.id);
+}
+
+function handleClickDetele(event: MouseEvent) {
+  event.stopPropagation();
+  images.deleteImage(props.item.id);
 }
 
 interface Props {
@@ -30,11 +36,15 @@ const props = defineProps<Props>();
       <button
         v-if="images.getFavArray.includes(props.item.id)"
         class="btn-primary-outline"
+        @click="handleClick"
       >
         <HeartIcon></HeartIcon>
       </button>
       <button v-else @click="handleClick" class="btn-primary-outline">
         <HeartIconOutline></HeartIconOutline>
+      </button>
+      <button @click="handleClickDetele" class="btn-primary-outline">
+        <TrashIcon></TrashIcon>
       </button>
     </div>
   </div>
@@ -55,8 +65,13 @@ const props = defineProps<Props>();
     display: flex;
     margin-top: 10px;
 
+    .btn-primary-outline {
+      margin: 0 10px;
+    }
+
     svg {
       width: 25px;
+      margin: 0 10px;
       fill: $primary-light;
     }
   }

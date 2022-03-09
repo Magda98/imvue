@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { useImagesStore } from "../stores/images";
 import VueEasyLightbox from "vue-easy-lightbox";
 import ImageComponent from "@/components/ImageComponent.vue";
-import PaginationComponent from "@/components/PaginationComponent.vue";
 
 const images = useImagesStore();
 const currentIndex = ref(0);
@@ -46,5 +45,17 @@ function handleHide() {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
+
+  @media only screen and (max-width: 1700px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

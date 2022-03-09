@@ -27,7 +27,20 @@ const api = {
 
   async getFavroites(page: number) {
     const response = await apiClient.get(`account/me/favorites/${page}`);
+    console.log(response.data);
     return response.data;
+  },
+
+  async postImage(image: File) {
+    const formdata = new FormData();
+    formdata.append("image", image);
+    const response = await apiClient.post(`/image`, formdata);
+    return response.data;
+  },
+
+  async deleteImage(id: string) {
+    const response = await apiClient.delete(`/image/${id}`);
+    return response;
   },
 };
 

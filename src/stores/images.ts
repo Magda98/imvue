@@ -15,6 +15,7 @@ interface Data {
     favorite: boolean;
   }>;
   imagesCount: number;
+  currentPage: number;
 }
 
 export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
@@ -23,6 +24,7 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
     userImages: [],
     userFavImages: [],
     imagesCount: 0,
+    currentPage: 0,
   }),
 
   getters: {
@@ -53,6 +55,7 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
     async getUserImages(page = 0) {
       const response = await api.getUserImages(page);
       this.userImages = response.data;
+      this.currentPage = page;
     },
 
     async getImagesCount() {
@@ -62,17 +65,31 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
 
     async togleFavouriteImage(id: string) {
       await api.togleFavouriteImage(id);
-      this.getFavourites();
+      this.getAllFav();
     },
 
     async getAllFav() {
+      const userFavImages = [];
       for (let i = 0; ; i++) {
         const response = await api.getFavroites(i);
 
         if (response.data.length === 0) break;
 
-        this.userFavImages.push(...response.data);
+        userFavImages.push(...response.data);
       }
+      this.userFavImages = userFavImages;
+    },
+
+    async postImage(image: File) {
+      const response = await api.postImage(image);
+      this.getUserImages();
+      console.log(response);
+    },
+
+    async deleteImage(id: string) {
+      const response = await api.deleteImage(id);
+      this.getUserImages(this.currentPage);
+      console.log(response);
     },
   },
 });
