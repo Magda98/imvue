@@ -70,6 +70,10 @@ onMounted(async () => {
 <style lang="scss">
 @import "@/assets/style/base.scss";
 
+.vel-btns-wrapper {
+  height: 100%;
+}
+
 .container {
   max-width: 80%;
   width: 100%;

@@ -4,38 +4,37 @@ import { ref } from "vue";
 import { useImagesStore } from "../stores/images";
 import XIcon from "./icons/XIcon.vue";
 
-const image = ref("");
+const image = ref<string | ArrayBuffer>("");
 
 function uploadImage(event: Event) {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0];
-  createFile(file);
+
+  if (file) createFile(file);
 }
 
-function handleDrop(event: Event) {
+function handleDrop(event: DragEvent) {
   event.stopPropagation();
   event.preventDefault();
-  const file = event.dataTransfer.files?.[0];
-  createFile(file);
+  const file = event.dataTransfer?.files?.[0];
+  if (file) createFile(file);
 }
 
-function createFile(file) {
+function createFile(file: File) {
   if (!file.type.match("image.*")) {
     alert("Select an image");
     return;
   }
-  var img = new Image();
   var reader = new FileReader();
 
   reader.onload = function (e) {
-    image.value = e.target.result;
+    if (e.target?.result) image.value = e.target?.result;
   };
   reader.readAsDataURL(file);
 }
 
 async function handleSubmit(event: Event) {
   event.preventDefault();
-  console.log(image.value.slice(22, -1));
   if (image.value) {
     await images.postImage(image.value.slice(22, -1));
     modal.showModal = false;
@@ -61,6 +60,7 @@ const images = useImagesStore();
     <form @submit="handleSubmit" class="upload-form">
       <div @dragover.prevent @drop="handleDrop" id="drop-area">
         <input
+          required
           type="file"
           accept="image/*"
           id="image"

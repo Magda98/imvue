@@ -31,7 +31,7 @@ const api = {
     return response.data;
   },
 
-  async postImage(image: File) {
+  async postImage(image: string) {
     const formdata = new FormData();
     formdata.append("image", image);
     const response = await apiClient.post(`/image`, formdata);

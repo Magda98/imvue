@@ -80,7 +80,7 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
       this.userFavImages = userFavImages;
     },
 
-    async postImage(image: File) {
+    async postImage(image: string) {
       const response = await api.postImage(image);
       this.getUserImages();
       console.log(response);
