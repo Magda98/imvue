@@ -66,12 +66,11 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
     },
 
     async getAllFav() {
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; ; i++) {
         const response = await api.getFavroites(i);
 
         if (response.data.length === 0) break;
 
-        console.log(response);
         this.userFavImages.push(...response.data);
       }
     },
