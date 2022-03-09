@@ -27,7 +27,10 @@ const props = defineProps<Props>();
   <div class="image-card">
     <img :src="props.item.link" referrerpolicy="no-referrer" />
     <div class="actions">
-      <button v-if="props.item.favorite" class="btn-primary-outline">
+      <button
+        v-if="images.getFavArray.includes(props.item.id)"
+        class="btn-primary-outline"
+      >
         <HeartIcon></HeartIcon>
       </button>
       <button v-else @click="handleClick" class="btn-primary-outline">

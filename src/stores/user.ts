@@ -58,11 +58,6 @@ export const useUserStore = defineStore<string, Data, _GettersTree<Data>>({
       window.location.reload();
     },
 
-    async getUserImages() {
-      const response = await api.getUserImages();
-      this.userImages = response.data;
-    },
-
     logout() {
       this.userInfo = undefined;
       this.token = "";

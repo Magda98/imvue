@@ -16,8 +16,12 @@ const api = {
   },
 
   async togleFavouriteImage(id: string) {
-    console.log(id);
     const response = await apiClient.post(`/image/${id}/favorite`);
+    return response.data;
+  },
+
+  async getFavroites() {
+    const response = await apiClient.get(`account/me/favorites/`);
     return response.data;
   },
 };
