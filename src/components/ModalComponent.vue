@@ -4,7 +4,7 @@ import { ref } from "vue";
 import { useImagesStore } from "../stores/images";
 import XIcon from "./icons/XIcon.vue";
 
-const image = ref<string | ArrayBuffer>("");
+const image = ref("");
 
 function uploadImage(event: Event) {
   const target = event.target as HTMLInputElement;
@@ -28,7 +28,7 @@ function createFile(file: File) {
   var reader = new FileReader();
 
   reader.onload = function (e) {
-    if (e.target?.result) image.value = e.target?.result;
+    image.value = e.target?.result as string;
   };
   reader.readAsDataURL(file);
 }
@@ -56,7 +56,9 @@ const images = useImagesStore();
       <XIcon></XIcon>
     </button>
     <h2>Add image to your gallery</h2>
-    <div class="preview"><img :src="image" alt="" class="img" /></div>
+    <div class="preview">
+      <img v-if="image" :src="image" alt="" class="img" />
+    </div>
     <form @submit="handleSubmit" class="upload-form">
       <div @dragover.prevent @drop="handleDrop" id="drop-area">
         <input
