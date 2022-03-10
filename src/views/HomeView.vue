@@ -46,6 +46,7 @@ function handleHide() {
     ></PaginationComponent>
     <div>
       <vue-easy-lightbox
+        :move-disabled="true"
         :visible="visible"
         :imgs="images.getImagesUrlArray"
         :index="currentIndex"

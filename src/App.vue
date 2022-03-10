@@ -73,7 +73,14 @@ onMounted(async () => {
 @import "@/assets/style/base.scss";
 
 .vel-btns-wrapper {
+  pointer-events: none;
   height: 100%;
+
+  .btn__next,
+  .btn__prev,
+  .btn__close {
+    pointer-events: all;
+  }
 }
 
 .container {
