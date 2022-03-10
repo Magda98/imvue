@@ -1,6 +1,7 @@
 import { defineStore, type _GettersTree } from "pinia";
 import api from "../api";
 import { apiClient } from "../api";
+import { useSnackbarStore } from "./snackbar";
 
 interface Data {
   token: string | null;
@@ -23,6 +24,13 @@ export const useUserStore = defineStore<string, Data, _GettersTree<Data>>({
     username: "",
     userInfo: undefined,
   }),
+
+  getters: {
+    snackbar() {
+      const snackbar = useSnackbarStore();
+      return snackbar.show;
+    },
+  },
 
   actions: {
     getAccessTokenUrl() {
@@ -52,15 +60,20 @@ export const useUserStore = defineStore<string, Data, _GettersTree<Data>>({
     },
 
     async getUserData() {
-      const response = await api.getUserData(this.username);
-      this.userInfo = response.data;
-      window.location.hash = "";
-      window.location.reload();
+      try {
+        const response = await api.getUserData(this.username);
+        this.userInfo = response.data;
+        window.location.hash = "";
+        window.location.reload();
+      } catch {
+        this.snackbar("Error getting user data", "error");
+      }
     },
 
     logout() {
       this.userInfo = undefined;
       this.token = "";
+      this.snackbar("Logout succesfully", "success");
     },
   },
   persist: true,

@@ -59,44 +59,65 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
 
   actions: {
     async getUserImages(page = 0) {
-      const response = await api.getUserImages(page);
-      this.userImages = response.data;
-      this.currentPage = page;
+      try {
+        const response = await api.getUserImages(page);
+        this.userImages = response.data;
+        this.currentPage = page;
+      } catch {
+        this.snackbar("Error getting  images", "error");
+      }
     },
 
     async getImagesCount() {
-      const response = await api.getImagesCount();
-      this.imagesCount = response.data;
+      try {
+        const response = await api.getImagesCount();
+        this.imagesCount = response.data;
+      } catch {
+        this.snackbar("Error getting images", "error");
+      }
     },
 
     async togleFavouriteImage(id: string) {
-      await api.togleFavouriteImage(id);
-      this.getAllFav();
+      try {
+        await api.togleFavouriteImage(id);
+        this.getAllFav();
+        this.snackbar("Image added to fav", "success");
+      } catch {
+        this.snackbar("Error while adding image to fav", "error");
+      }
     },
 
     async getAllFav() {
-      const userFavImages = [];
-      for (let i = 0; ; i++) {
-        const response = await api.getFavroites(i);
+      try {
+        const userFavImages = [];
+        for (let i = 0; ; i++) {
+          const response = await api.getFavroites(i);
 
-        if (response.data.length === 0) break;
+          if (response.data.length === 0) break;
 
-        userFavImages.push(...response.data);
+          userFavImages.push(...response.data);
+        }
+        this.userFavImages = userFavImages;
+      } catch {
+        this.snackbar("Error getting favorites images", "error");
       }
-      this.userFavImages = userFavImages;
     },
 
     async postImage(image: string) {
-      const response = await api.postImage(image);
-      this.getUserImages();
-      console.log(response);
+      try {
+        await api.postImage(image);
+        this.getUserImages();
+        this.snackbar("Image added", "success");
+      } catch {
+        this.snackbar("Error while adding image", "error");
+      }
     },
 
     async deleteImage(id: string) {
       try {
-        const response = await api.deleteImage(id);
+        await api.deleteImage(id);
         this.getUserImages(this.currentPage);
-        this.snackbar("Image deleted", response.data.status);
+        this.snackbar("Image deleted", "success");
       } catch {
         this.snackbar("Error while deleting image", "error");
       }

@@ -27,7 +27,6 @@ const api = {
 
   async getFavroites(page: number) {
     const response = await apiClient.get(`account/me/favorites/${page}`);
-    console.log(response.data);
     return response.data;
   },
 
