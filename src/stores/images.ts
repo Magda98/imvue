@@ -1,5 +1,6 @@
 import { defineStore, type _GettersTree } from "pinia";
 import api from "../api";
+import { useSnackbarStore } from "./snackbar";
 
 interface Data {
   userImages: Array<{
@@ -28,6 +29,11 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
   }),
 
   getters: {
+    snackbar() {
+      const snackbar = useSnackbarStore();
+      return snackbar.show;
+    },
+
     getImagesUrlArray: (state) => {
       return state.userImages.map((item) => item.link);
     },
@@ -87,9 +93,14 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
     },
 
     async deleteImage(id: string) {
-      const response = await api.deleteImage(id);
-      this.getUserImages(this.currentPage);
-      console.log(response);
+      try {
+        const response = await api.deleteImage(id);
+        this.getUserImages(this.currentPage);
+        this.snackbar(response.data);
+        console.log(response.data);
+      } catch {
+        this.snackbar("Error while deleting image");
+      }
     },
   },
 });

@@ -6,6 +6,7 @@ import { useImagesStore } from "./stores/images";
 import ModalComponent from "./components/ModalComponent.vue";
 import { useModalStore } from "./stores/modal";
 import PlusIcon from "./components/icons/PlusIcon.vue";
+import SnackBarComponent from "./components/SnackBarComponent.vue";
 
 const user = useUserStore();
 const images = useImagesStore();
@@ -64,6 +65,7 @@ onMounted(async () => {
   >
     <PlusIcon />
   </button>
+  <SnackBarComponent></SnackBarComponent>
   <ModalComponent></ModalComponent>
 </template>
 
