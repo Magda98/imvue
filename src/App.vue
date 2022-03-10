@@ -101,6 +101,11 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 991px) {
+    right: 25px;
+    bottom: 25px;
+  }
 }
 
 .nav {
@@ -140,6 +145,10 @@ onMounted(async () => {
     align-items: center;
     flex-direction: row;
     padding: 20px 0;
+
+    @media only screen and (max-width: 768px) {
+      width: 95%;
+    }
   }
 }
 
@@ -154,11 +163,18 @@ onMounted(async () => {
     align-items: center;
     flex-direction: row;
     margin: 0 20px;
+
+    @media only screen and (max-width: 768px) {
+      flex-direction: column;
+    }
   }
 
   .user-name {
     color: $text;
     margin: 0 10px;
+    @media only screen and (max-width: 530px) {
+      display: none;
+    }
   }
 
   .user-avatar {

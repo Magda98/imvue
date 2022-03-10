@@ -51,6 +51,7 @@ const props = defineProps<Props>();
   align-items: center;
   margin: 50px 0;
   font-size: 16px;
+  padding: 0;
 
   .pag {
     margin: 0 5px;
@@ -68,6 +69,16 @@ const props = defineProps<Props>();
     &.next,
     &.prev {
       margin: 0 10px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      display: none;
+      font-size: 20px;
+      &.active,
+      &.next,
+      &.prev {
+        display: block;
+      }
     }
   }
 }

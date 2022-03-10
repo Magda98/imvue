@@ -61,7 +61,7 @@ const snackbar = useSnackbarStore();
     <button class="close btn" @click="modal.showModal = false">
       <CloseIcon />
     </button>
-    <h2>Add image to your gallery</h2>
+    <h2 class="text">Add image to gallery</h2>
     <div class="preview">
       <img v-if="image" :src="image" alt="" class="img" />
     </div>
@@ -107,6 +107,14 @@ const snackbar = useSnackbarStore();
   background-color: $bg-elevation;
   border-radius: 5px;
 
+  @media only screen and (max-width: 991px) {
+    padding: 10px 25px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    padding: 10px 15px;
+    width: 90%;
+  }
   .preview {
     display: flex;
     justify-content: center;

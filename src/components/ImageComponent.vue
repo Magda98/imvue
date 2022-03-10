@@ -134,5 +134,11 @@ const props = defineProps<Props>();
     object-fit: cover;
     display: block;
   }
+
+  @media only screen and (max-width: 768px) {
+    img {
+      width: 280px;
+    }
+  }
 }
 </style>
