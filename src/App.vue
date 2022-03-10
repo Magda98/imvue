@@ -107,6 +107,10 @@ onMounted(async () => {
   display: flex;
   justify-content: flex-end;
 
+  .router-link-exact-active {
+    color: $primary-light;
+  }
+
   a {
     display: block;
     padding: 10px 20px;

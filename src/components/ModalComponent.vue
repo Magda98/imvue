@@ -2,6 +2,7 @@
 import { useModalStore } from "../stores/modal";
 import { ref } from "vue";
 import { useImagesStore } from "../stores/images";
+import { useSnackbarStore } from "../stores/snackbar";
 import XIcon from "./icons/XIcon.vue";
 
 const image = ref("");
@@ -16,19 +17,21 @@ function uploadImage(event: Event) {
 function handleDrop(event: DragEvent) {
   event.stopPropagation();
   event.preventDefault();
-  const file = event.dataTransfer?.files?.[0];
+  const file = event.dataTransfer?.files[0];
+  console.log(file);
   if (file) createFile(file);
 }
 
 function createFile(file: File) {
   if (!file.type.match("image.*")) {
-    alert("Select an image");
+    snackbar.show("You must add an correct image before upload", "error");
     return;
   }
   var reader = new FileReader();
 
   reader.onload = function (e) {
     image.value = e.target?.result as string;
+    console.log(image.value);
   };
   reader.readAsDataURL(file);
 }
@@ -38,11 +41,14 @@ async function handleSubmit(event: Event) {
   if (image.value) {
     await images.postImage(image.value.slice(22, -1));
     modal.showModal = false;
+  } else {
+    snackbar.show("You must add an image before upload", "error");
   }
 }
 
 const modal = useModalStore();
 const images = useImagesStore();
+const snackbar = useSnackbarStore();
 </script>
 
 <template>
@@ -62,7 +68,6 @@ const images = useImagesStore();
     <form @submit="handleSubmit" class="upload-form">
       <div @dragover.prevent @drop="handleDrop" id="drop-area">
         <input
-          required
           type="file"
           accept="image/*"
           id="image"
