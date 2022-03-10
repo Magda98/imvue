@@ -10,8 +10,8 @@ interface Data {
 export const useSnackbarStore = defineStore<string, Data, _GettersTree<Data>>({
   id: "snackbar",
   state: () => ({
-    showSnackbar: false,
-    message: "",
+    showSnackbar: true,
+    message: "message",
     timeout: 5000,
     status: "success",
   }),
@@ -21,9 +21,10 @@ export const useSnackbarStore = defineStore<string, Data, _GettersTree<Data>>({
       this.showSnackbar = false;
     },
 
-    show(message: string) {
+    show(message: string, status: string) {
       this.message = message;
       this.showSnackbar = true;
+      this.status = status;
       setTimeout(this.close, this.timeout);
     },
   },

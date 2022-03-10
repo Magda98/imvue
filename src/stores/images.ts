@@ -96,10 +96,9 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
       try {
         const response = await api.deleteImage(id);
         this.getUserImages(this.currentPage);
-        this.snackbar(response.data);
-        console.log(response.data);
+        this.snackbar("Image deleted", response.data.status);
       } catch {
-        this.snackbar("Error while deleting image");
+        this.snackbar("Error while deleting image", "error");
       }
     },
   },

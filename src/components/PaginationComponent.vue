@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
-
 function handleClick(index: number) {
   props.callback(index);
 }

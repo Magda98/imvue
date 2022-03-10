@@ -6,7 +6,7 @@ import { useImagesStore } from "./stores/images";
 import ModalComponent from "./components/ModalComponent.vue";
 import { useModalStore } from "./stores/modal";
 import PlusIcon from "./components/icons/PlusIcon.vue";
-import SnackBarComponent from "./components/SnackBarComponent.vue";
+import SnackBarComponent from "./components/SnackbarComponent.vue";
 
 const user = useUserStore();
 const images = useImagesStore();

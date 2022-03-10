@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
 import HeartIcon from "./icons/HeartIcon.vue";
 import HeartIconOutline from "./icons/HeartIconOutline.vue";
 import TrashIcon from "./icons/TrashIcon.vue";
