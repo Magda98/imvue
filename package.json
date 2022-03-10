@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@jamesives/github-pages-deploy-action": "^4.2.5",
     "axios": "^0.26.0",
     "pinia": "^2.0.11",
     "pinia-plugin-persistedstate": "^1.5.0",
