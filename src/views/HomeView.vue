@@ -22,6 +22,7 @@ function handleHide() {
 <template>
   <div>
     <PaginationComponent
+      v-if="images.getMaxPagesCount > 1"
       :pages="images.getPagesCount"
       :max-pages="images.getMaxPagesCount"
       :current-page="images.currentPage"
@@ -37,6 +38,7 @@ function handleHide() {
       </div>
     </div>
     <PaginationComponent
+      v-if="images.getMaxPagesCount > 1"
       :pages="images.getPagesCount"
       :max-pages="images.getMaxPagesCount"
       :current-page="images.currentPage"
