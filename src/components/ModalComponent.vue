@@ -3,7 +3,7 @@ import { useModalStore } from "../stores/modal";
 import { ref } from "vue";
 import { useImagesStore } from "../stores/images";
 import { useSnackbarStore } from "../stores/snackbar";
-import XIcon from "./icons/XIcon.vue";
+import CloseIcon from "./icons/CloseIcon.vue";
 
 const image = ref("");
 
@@ -59,7 +59,7 @@ const snackbar = useSnackbarStore();
   ></div>
   <div class="modal" v-if="modal.showModal">
     <button class="close btn" @click="modal.showModal = false">
-      <XIcon></XIcon>
+      <CloseIcon />
     </button>
     <h2>Add image to your gallery</h2>
     <div class="preview">

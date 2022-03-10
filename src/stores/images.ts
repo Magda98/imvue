@@ -79,9 +79,14 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
 
     async togleFavouriteImage(id: string) {
       try {
-        await api.togleFavouriteImage(id);
+        const response = await api.togleFavouriteImage(id);
+        console.log(response);
         this.getAllFav();
-        this.snackbar("Image added to fav", "success");
+        if (response.data === "unfavorited") {
+          this.snackbar("Image removed to fav", "error");
+        } else if (response.data === "favorited") {
+          this.snackbar("Image added to fav", "success");
+        }
       } catch {
         this.snackbar("Error while adding image to fav", "error");
       }
@@ -115,8 +120,13 @@ export const useImagesStore = defineStore<string, Data, _GettersTree<Data>>({
 
     async deleteImage(id: string) {
       try {
+        if (this.getFavArray.includes(id)) {
+          await this.togleFavouriteImage(id);
+        }
+
         await api.deleteImage(id);
         this.getUserImages(this.currentPage);
+        this.getAllFav();
         this.snackbar("Image deleted", "success");
       } catch {
         this.snackbar("Error while deleting image", "error");

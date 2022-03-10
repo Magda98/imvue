@@ -2,7 +2,7 @@
 import { useSnackbarStore } from "../stores/snackbar";
 import ErrorIcon from "./icons/ErrorIcon.vue";
 import SuccessIcon from "./icons/SuccessIcon.vue";
-import XIcon from "./icons/XIcon.vue";
+import CloseIcon from "./icons/CloseIcon.vue";
 
 const snackbar = useSnackbarStore();
 </script>
@@ -19,7 +19,7 @@ const snackbar = useSnackbarStore();
         ></SuccessIcon>
       </div>
       <button class="btn close" @click="snackbar.close()">
-        <XIcon></XIcon>
+        <CloseIcon />
       </button>
     </div>
   </div>
