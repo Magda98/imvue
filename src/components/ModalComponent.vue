@@ -40,6 +40,7 @@ async function handleSubmit(event: Event) {
   event.preventDefault();
   if (image.value) {
     await images.postImage(image.value.slice(22, -1));
+    image.value = "";
     modal.showModal = false;
   } else {
     snackbar.show("You must add an image before upload", "error");

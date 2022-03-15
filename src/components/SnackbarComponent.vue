@@ -55,11 +55,12 @@ const snackbar = useSnackbarStore();
 
     .icon {
       margin-left: auto;
-      margin-right: 15px;
+      margin-right: 5px;
 
       svg {
         width: 20px;
         height: 20px;
+        margin-left: 15px;
       }
       .error {
         fill: #b71c1c;
