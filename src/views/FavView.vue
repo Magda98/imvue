@@ -31,7 +31,6 @@ function handleHide() {
     </div>
     <div>
       <vue-easy-lightbox
-        :move-disabled="true"
         :visible="visible"
         :imgs="images.getFavUrlArray"
         :index="currentIndex"
